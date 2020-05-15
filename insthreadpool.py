@@ -12,10 +12,14 @@ from multiprocessing.dummy import Pool
 url_base = 'https://www.instagram.com/'
 uri = 'https://www.instagram.com/graphql/query/?query_hash=a5164aed103f24b03e7b7747a2d94e3c&variables=%7B%22id%22%3A%22{user_id}%22%2C%22first%22%3A12%2C%22after%22%3A%22{cursor}%22%7D'
 
+proxies = {
+    'http': '23.80.121.202:30201',
+    'https': '124.156.111.19:27954'
+}
 
 headers = {
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',
-    'cookie': '这里加上自己的cookie'
+    'cookie': '這裡加上自己的cookies'
 }
 
 
@@ -25,7 +29,7 @@ def get_html(url):
         if response.status_code == 200:
             return response.text
         else:
-            print('请求网页源代码错误, 错误状态码：', response.status_code)
+            print('請求網頁源代碼錯誤，錯誤狀態碼：', response.status_code)
     except Exception as e:
         print(e)
         return None
@@ -37,7 +41,7 @@ def get_json(url):
         if response.status_code == 200:
             return response.json()
         else:
-            print('请求网页json错误, 错误状态码：', response.status_code)
+            print('請求網頁json錯誤，錯誤狀態碼：', response.status_code)
     except Exception as e:
         print(e)
         time.sleep(60 + float(random.randint(1, 4000))/100)
@@ -50,7 +54,7 @@ def get_content(url):
         if response.status_code == 200:
             return response.content
         else:
-            print('请求照片二进制流错误, 错误状态码：', response.status_code)
+            print('請求照片二進制錯誤，錯誤狀態碼：', response.status_code)
     except Exception as e:
         print(e)
         return None
@@ -117,15 +121,15 @@ def main(user):
                 file_path = r'.\{0}\{1}.{2}'.format(user, md5(content).hexdigest(), endw)                
                 if not os.path.exists(file_path):
                     with open(file_path, 'wb') as f:
-                        # print('正在下载第{0}张： '.format(i) + urls[i], ' 还剩{0}张'.format(len(urls)-i-1))
-                        print('下载完成：', urls[i])
+                        # print('正在下載第{0}張： '.format(i) + urls[i], ' 還剩{0}張'.format(len(urls)-i-1))
+                        print('下載完成：', urls[i])
                         f.write(content)
                         f.close()
                 else:
-                    print('第{0}张照片已下载'.format(i))
+                    print('第{0}張照片已下載'.format(i))
         except Exception as e:
             print(e)
-            print('这组图片视频下载失败')
+            print('這組圖片或影片下載失敗')
 
 
 if __name__ == '__main__':
@@ -138,4 +142,4 @@ if __name__ == '__main__':
     hour = spend // 3600
     minu = (spend - 3600 * hour) // 60
     sec = spend - 3600 * hour - 60 * minu
-    print(f'一共花费了{hour}小时{minu}分钟{sec}秒')
+    print(f'一共花費{hour}小時{minu}分鐘{sec}秒')
