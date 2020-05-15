@@ -96,7 +96,8 @@ def get_urls(html):
                     print(display_url)
                     urls.append(display_url)
         print(cursor, flag)
-        time.sleep(4 + float(random.randint(1, 800))/200)     
+        # time.sleep(4 + float(random.randint(1, 800))/200)     
+        # 如果要爬取上述圖片或影片數量>2000 ，則開啟
     return urls
 
 
@@ -112,7 +113,7 @@ def main(user):
         try:
             content = get_content(urls[i])
             endw = 'mp4' if r'mp4?_nc_ht=scontent' in urls[i] else 'jpg'
-            file_path = r'/Users/raylin/picture_ig/dabechen/\{0}\{1}.{2}'.format(user, md5(content).hexdigest(), endw)
+            file_path = r'/Users/raylin/picture_ig/emma85721/\{0}\{1}.{2}'.format(user, md5(content).hexdigest(), endw)
             if not os.path.exists(file_path):
                 with open(file_path, 'wb') as f:
                     print('第{0}張下載完成： '.format(i) + urls[i])
@@ -135,5 +136,5 @@ if __name__ == '__main__':
     hour = spend // 3600
     minu = (spend - 3600 * hour) // 60
     sec = spend - 3600 * hour - 60 * minu
-
+    print(f'一共花費{hour}小時{minu}分鐘{sec}秒')
 
